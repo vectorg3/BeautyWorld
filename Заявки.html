@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заявки</title>
+  </head>
+  <body style="background-image: url('фон1.jpg')">
+    <h1 class="title">Заявки</h1>
+    <div class="orders__container" id="orders"></div>
+  </body>
+</html>
+<style>
+  .title {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .orders__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .orders__item {
+    border: 1px solid plum;
+    padding: 1rem;
+    border-radius: 15px;
+    background-color: pink;
+    font-size: 18px;
+  }
+  .orders__row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+</style>
+<script language="JavaScript">
+  url = "https://beautyworldapi.onrender.com/";
+  const renderOrders = async () => {
+    try {
+      await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((orders) => {
+          let innerHTML = ``;
+          orders.forEach((order) => {
+            innerHTML += `<div class="orders__item">
+          <div class="orders__row">
+            <span style="font-weight: 700">Фамилия</span>${order.surName}
+          </div>
+          <div class="orders__row">
+            <span style="font-weight: 700">Имя</span>${order.firstName}
+          </div>
+          <div class="orders__row">
+            <span style="font-weight: 700">Отчество</span>${order.secondName}
+          </div>
+          <div class="orders__row">
+            <span style="font-weight: 700">Номер</span>${order.phone}
+          </div>
+          <div class="orders__row">
+            <span style="font-weight: 700">Эл. почта</span>${order.email}
+          </div>
+          <button id="delete__button" onclick="deleteOrder('${order._id}')">
+            Удалить заказ
+          </button>
+        </div>`;
+          });
+          document.getElementById("orders").innerHTML = innerHTML;
+        });
+    } catch (error) {
+      console.log(error);
+      alert("Ошибка запроса на сервер");
+    }
+  };
+
+  const deleteOrder = async (id) => {
+    try {
+      let response = await fetch(url + `${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      });
+      if (response.ok) {
+        await renderOrders();
+      } else {
+        alert("Ошибка запроса");
+      }
+    } catch (error) {
+      alert("Ошибка запроса " + error);
+    }
+  };
+
+  renderOrders();
+</script>

@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Заявка</title>
+<style type="text/css">
+.style1 {
+				text-align: center;
+}
+.style2 {
+				text-align: center;
+				color: #800080;
+				font-size: xx-large;
+}
+.style3 {
+				color: #C0C0C0;
+				font-size: x-large;
+}
+.style4 {
+				font-size: xx-large;
+}
+.style5 {
+				font-size: x-large;
+}
+.style6 {
+				font-style: italic;
+}
+.style16 {
+				font-family: Cambria, serif;
+				font-size: medium;
+				font-style: italic;
+				color: #7030A0;
+}
+</style>
+</head>
+<body style="background-image: url('фон1.jpg')">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+   <meta http-equiv="Content-Language" content="ru" />
+   <title>Оставить заявку</title>
+   <meta name="Microsoft Border" content="tb, default" />
+</head>
+
+<body style="background-image: url('фон1.jpg');">
+
+<script language="JavaScript">
+
+async function proverka() 
+{  
+   strokaF=document.forma1.FF.value;  // Фамилия 1я-большая буква, остальный маленькие
+
+   strokaF1=strokaF.substring(0,1);
+   strokaF2=strokaF1.toUpperCase();
+   strokaF3=strokaF.substring(1,strokaF.length);
+   strokaF4=strokaF3.toLowerCase();
+      if ((strokaF1==strokaF2)&&(strokaF3==strokaF4) && (strokaF.length !== 0)){alert('Фамилия введена правильно');aa = true}
+      else {aa = false;alert('Фамилия введена неправильно! Исправьте, пожалуйста, согласно шаблону!')}
+
+   strokaI=document.forma1.II.value;  // Имя: 1я-большая буква, остальный маленькие
+   strokaI1=strokaI.substring(0,1);
+   strokaI2=strokaI1.toUpperCase();
+   strokaI3=strokaI.substring(1,strokaI.length);
+   strokaI4=strokaI3.toLowerCase();
+   if ((strokaI1==strokaI2)&&(strokaI3==strokaI4) && (strokaI.length !== 0)){alert('Имя введено правильно');bb = true}
+      else {bb = false;alert('Имя введено неправильно! Исправьте, пожалуйста, согласно шаблону!')}
+
+   strokaO=document.forma1.OO.value;
+   strokaO1=strokaO.substring(0,1);
+   strokaO2=strokaO1.toUpperCase();
+   strokaO3=strokaO.substring(1,strokaO.length);
+   strokaO4=strokaO3.toLowerCase();
+   if ((strokaO1==strokaO2)&&(strokaO3==strokaO4)  && (strokaO.length !== 0)){alert('Отчество введено правильно');cc = true}
+      else {cc = false;alert('Отчество введено неправильно! Исправьте, пожалуйста, согласно шаблону!')}
+
+   strokaE=document.forma1.EE.value;  // Эл. почта по шаблону
+   aaa=strokaE.indexOf('@');
+   bbb=strokaE.indexOf('.ru');
+   if ((aaa>=4)&&(bbb>=aaa+5) && (strokaE.length !== 0)){alert('Электронная почта введена правильно');dd = true}
+   else {dd = false;alert('Электронная почта введена неправильно! Исправьте, пожалуйста, согласно шаблону!')}
+   
+   strokaT=document.forma1.TT.value;  // Телефон по шаблону и не более 17 символов
+   let isPhoneNumber = new RegExp(
+        /(\+7|8)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g
+    );
+    if(isPhoneNumber.test(strokaT)){
+      alert('Номер телефона введён правильно')
+      gg = true
+    }else{
+      gg = false;
+      alert('Номер телефона введён неправильно. Исправьте пожалуйста, согласно шаблона')
+    }
+   
+   if (aa && bb && cc && dd && gg) {
+      let zayavka = {
+         firstName: strokaI,
+         surName: strokaF,
+         secondName: strokaO,
+         email: strokaE,
+         phone: strokaT,
+      }
+      url='https://beautyworldapi.onrender.com';
+      try {
+            let response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify(zayavka),
+            });
+            if (response.ok) {
+                alert('Заявка успешно создана, скоро вас перенаправит на страницу заявок')
+                window.open('Заявки.html', '_self');
+            } else {
+                alert('Не удалось сделать запрос, произошла ошибка')
+            }
+        } catch (error) {
+            alert('Не удалось сделать запрос, произошла ошибка')
+        }
+   }
+}
+//-->
+</script>
+
+<h2 class="style2"><span style="mso-bidi-font-style:normal"><strong>
+<span class="style16"><a href="menu.htm">Главное меню</a></span></strong></span></h2>
+<p class="style2">&nbsp;</p>
+<h2 class="style2"><em>Оставить заявку</em></h2>
+
+<form name="forma1" method="GET" action="add_zakaz.asp">
+	<div class="style1">
+	<p class="style1"><span class="style5">Фамилия&nbsp;&nbsp; </span>
+	<span class="style4"><span class="style5"> 
+	<input type="text" name="FF" size="20" class="style6" /></span></span>
+	<span class="style3">Зайцева </span> </p>
+	<p class="style1"><span class="style5">Имя&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</span><span class="style4"><span class="style5">
+	   <input type="text" name="II" size="20" class="style6"/></span></span>
+	<span class="style3">Татьяна</span><span class="style5"> </span> </p>
+	<p class="style1"><span class="style5">Отчество&nbsp;&nbsp;&nbsp; </span>
+	<span class="style4"><span class="style5">
+	<input type="text" name="OO" size="20" class="style6" style="width: 139px" /></span></span><span class="style3"> Андреевна 
+	</span> </p>
+	<p class="style1"><span class="style5">Эл. почта&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</span>&nbsp;<span class="style4"><span class="style5"><input type="text" name="EE" size="20" style="width: 141px" class="style6" /></span></span>&nbsp;<span class="style3">xxxx@xxxx.ru</span></p>
+	<p class="style1"><span class="style5">Телефон&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</span><span class="style4"><span class="style5"> 
+	<input type="text" name="TT" size="20" style="width: 171px" /></span></span><span class="style3">8-***-***-**-**</span></p>
+    	<input type="button" value="Отправить" name="B1" onclick="proverka()" />
+	    <input type="reset" value="Сброс" name="B2" />
+</div>
+</form>
+<hr />
+
+</body>
+</html>
+
+</body>
+
+</html>
